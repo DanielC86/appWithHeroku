@@ -1,6 +1,7 @@
 package com.daniel.czajka.dao;
 
 import com.daniel.czajka.entity.Employee;
+import com.daniel.czajka.entity.Room;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,44 +11,40 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 @Repository
-public class EmployeeDAOImpl implements EmployeeDAO{
+public class RoomDAOImpl implements RoomDAO{
 
-    //define entity manager
     private EntityManager entityManager;
 
-    //setup constructor injection
+    //constructor injection
     @Autowired
-    public EmployeeDAOImpl(EntityManager theEntityManager){
+    public RoomDAOImpl(EntityManager theEntityManager){
         entityManager = theEntityManager;
     }
 
     @Override
-    public List<Employee> findAll() {
+    public List<Room> findAll() {
         //get current hibernate session
         Session currentSession = entityManager.unwrap(Session.class);
 
-        //create query
-        Query<Employee> theEmployeeQuery = currentSession.createQuery("from Employee", Employee.class);
+        Query<Room> theRoomQuery = currentSession.createQuery("from Room", Room.class);
 
-        //execute theQuery
-        List<Employee> allEmployees = theEmployeeQuery.getResultList();
+        List<Room> allRooms = theRoomQuery.getResultList();
 
-        //and return the result
-        return allEmployees;
+        return allRooms;
     }
 
     @Override
-    public Employee findById(int theEmpId) {
+    public Room findById(int theRoomId) {
         return null;
     }
 
     @Override
-    public void save(Employee theEmployee) {
+    public void save(Room theRoom) {
 
     }
 
     @Override
-    public void deleteById(int theId) {
+    public void deleteById(Room theRoom) {
 
     }
 }
