@@ -4,9 +4,7 @@ import com.daniel.czajka.entity.Employee;
 import com.daniel.czajka.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,6 +24,53 @@ public class EmployeeRestController {
     public List<Employee> findAll(){
         return employeeService.findAll();
     }
+
+    //return a single object (employee) by ID
+    @GetMapping("/employees/{employeeId")
+    public Employee getEmployee(@PathVariable int employeeId){
+        Employee theEmployee = employeeService.findById(employeeId);
+
+        if (theEmployee == null){
+            throw new RuntimeException("Employee ID not found: " + employeeId);
+        }
+
+        return theEmployee;
+    }
+
+    //adding new object (employee)
+    @PostMapping("/employees")
+    public Employee addEmployee(@RequestBody Employee theEmployee){
+        theEmployee.setEmpId(0);
+
+        employeeService.save(theEmployee);
+
+        return theEmployee;
+    }
+
+    //updating existing object (employee)
+    @PutMapping("/employees")
+    public Employee updateEmployee(@RequestBody Employee theEmployee){
+        employeeService.save(theEmployee);
+
+        return  theEmployee;
+    }
+
+    //deleting existing object (employee) by id
+    @DeleteMapping("/employees/{employeeId}")
+    public String deleteEmployee(@PathVariable int employeeId){
+        Employee theEmployee = employeeService.findById(employeeId);
+
+        if (theEmployee == null){
+            throw new RuntimeException("Employee ID not found: " + employeeId);
+        }
+        employeeService.deleteById(employeeId);
+
+        return "deleted employee with id of: " + employeeId;
+
+    }
+
+
+
 
 
     //trying to get the model for website

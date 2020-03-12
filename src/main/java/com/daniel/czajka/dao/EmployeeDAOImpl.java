@@ -38,16 +38,43 @@ public class EmployeeDAOImpl implements EmployeeDAO{
 
     @Override
     public Employee findById(int theEmpId) {
-        return null;
+
+        //get current hibernate session
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        //get the employee
+        Employee theEmployee = currentSession.get(Employee.class, theEmpId);
+
+        //return the result
+        return theEmployee;
     }
 
     @Override
     public void save(Employee theEmployee) {
 
+        //get current hibernate session
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        //save the object
+        currentSession.saveOrUpdate(theEmployee);
+
     }
 
     @Override
     public void deleteById(int theId) {
+
+        //get current hibernate session
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        //delete the object by id (by query)
+        Query deleteEmpQuery = currentSession.createQuery("delete from Employee where id=:employeeId");
+
+        //set the id parameter for query
+        deleteEmpQuery.setParameter("employeeID", theId);
+
+        //execute the query
+        deleteEmpQuery.executeUpdate();
+
 
     }
 }
