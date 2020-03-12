@@ -26,7 +26,7 @@ public class EmployeeRestController {
     }
 
     //return a single object (employee) by ID
-    @GetMapping("/employees/{employeeId")
+    @GetMapping("/employees/{employeeId}")
     public Employee getEmployee(@PathVariable int employeeId){
         Employee theEmployee = employeeService.findById(employeeId);
 
